@@ -57,7 +57,7 @@ import pandas as pd
 import json
 
 # Read CSV
-df = pd.read_csv('guests.csv')
+df = pd.read_csv('../guests.csv')
 profiles = df.to_dict(orient='records')
 
 # Save profiles
