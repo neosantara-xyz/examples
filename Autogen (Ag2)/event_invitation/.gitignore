@@ -1,0 +1,12 @@
+# Sensitive files
+*.env
+NAI_API_KEY
+
+# Output directory
+event_invitations/*
+!event_invitations/.gitkeep
+
+# Python and Colab artifacts
+__pycache__/
+*.pyc
+*.ipynb_checkpoints/
