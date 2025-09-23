@@ -34,6 +34,14 @@ code_executor = UserProxyAgent(
     max_consecutive_auto_reply=1,
 )
 
+user_proxy = UserProxyAgent(
+    name="User",
+    code_execution_config=False,
+    is_termination_msg=lambda msg: "FINISH" in msg.get("content", ""),
+    human_input_mode="NEVER",
+    max_consecutive_auto_reply=1,
+)
+
 # Agent 1: Guest Profiler
 profiler = AssistantAgent(
     name="Profiler",
@@ -223,26 +231,6 @@ End with 'FINISH'.""",
     max_consecutive_auto_reply=1,
 )
 
-# State transition function
-def state_transition(last_speaker, groupchat):
-    logger.info(f"Transitioning from {last_speaker.name}")
-    if last_speaker is user_proxy:
-        return profiler
-    elif last_speaker in [profiler, drafter, validator]:
-        return code_executor
-    elif last_speaker is code_executor:
-        last_second_speaker_name = groupchat.messages[-2]["name"]
-        if "error" in groupchat.messages[-1]["content"].lower():
-            logger.error(f"Error in {last_second_speaker_name} execution, retrying")
-            return groupchat.agent_by_name(last_second_speaker_name)
-        elif last_second_speaker_name == "Profiler":
-            return drafter
-        elif last_second_speaker_name == "Drafter":
-            return validator
-        elif last_second_speaker_name == "Validator":
-            return None  # End conversation
-    return None
-
 # Group chat
 group_chat = GroupChat(
     agents=[user_proxy, profiler, drafter, validator, code_executor],
@@ -250,13 +238,8 @@ group_chat = GroupChat(
     max_round=12,
     speaker_selection_method=state_transition,
 )
-user_proxy = UserProxyAgent(
-    name="User",
-    code_execution_config=False,
-    is_termination_msg=lambda msg: "FINISH" in msg.get("content", ""),
-    human_input_mode="NEVER",
-    max_consecutive_auto_reply=1,
-)
+
+# Group chat manager
 manager = GroupChatManager(
     groupchat=group_chat,
     llm_config={"config_list": config_list}
