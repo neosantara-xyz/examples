@@ -45,26 +45,63 @@ user_proxy = UserProxyAgent(
     max_consecutive_auto_reply=1,
 )
 
-# Simplified Profiler
+# Smart Profiler - auto-detects file paths
 profiler = AssistantAgent(
     name="Profiler",
     llm_config={"config_list": config_list},
     system_message="""You must write Python code to read guests.csv and save profiles to profiles.json.
 
-Example code:
+Auto-detect the CSV file location and use dynamic paths:
+
 ```python
 import pandas as pd
 import json
+from pathlib import Path
+import os
+
+def find_csv_file(filename='guests.csv'):
+    """Search for CSV file in current and parent directories"""
+    current_dir = Path.cwd()
+    print(f"Current working directory: {current_dir}")
+    
+    # Check current directory first
+    csv_path = current_dir / filename
+    if csv_path.exists():
+        return csv_path
+        
+    # Check parent directory
+    csv_path = current_dir.parent / filename
+    if csv_path.exists():
+        return csv_path
+        
+    # Check two levels up (in case we're deeply nested)
+    csv_path = current_dir.parent.parent / filename
+    if csv_path.exists():
+        return csv_path
+        
+    # Last resort: search in common directories
+    for possible_dir in [current_dir, current_dir.parent, Path.home()]:
+        csv_path = possible_dir / filename
+        if csv_path.exists():
+            return csv_path
+    
+    raise FileNotFoundError(f"Could not find {filename} in any searched directories")
+
+# Auto-detect CSV location
+csv_file = find_csv_file('guests.csv')
+print(f"Found CSV file at: {csv_file}")
 
 # Read CSV
-df = pd.read_csv('../guests.csv')
+df = pd.read_csv(csv_file)
 profiles = df.to_dict(orient='records')
 
-# Save profiles
-with open('event_invitations/profiles.json', 'w') as f:
+# Save profiles in current working directory
+output_file = Path.cwd() / 'profiles.json'
+with open(output_file, 'w') as f:
     json.dump(profiles, f, indent=2)
     
-print(f"Saved {len(profiles)} profiles successfully")
+print(f"Saved {len(profiles)} profiles successfully to: {output_file}")
+print(f"CSV columns: {list(df.columns)}")
 ```
 
 Always end your response with: FINISH""",
@@ -114,6 +151,17 @@ if __name__ == "__main__":
             clear_history=True,
         )
         logger.info("Test workflow completed successfully")
+        
+        # Check if the file was created
+        output_file = workdir / "profiles.json"
+        if output_file.exists():
+            logger.info(f"SUCCESS: profiles.json created at {output_file}")
+            with open(output_file, 'r') as f:
+                data = json.load(f)
+                logger.info(f"File contains {len(data)} profiles")
+        else:
+            logger.warning("profiles.json was not created")
+            
     except Exception as e:
         logger.error(f"Test workflow failed: {e}")
         raise
