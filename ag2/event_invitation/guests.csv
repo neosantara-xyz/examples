@@ -1,3 +1,7 @@
 guest_id,name,language,formality,context
-G001,Dr. Emily Chen,English,Formal,Conference Speaker
-G005,Andi Rahman,Indonesian,Casual,Startup Founder
+G001,Dr. Anya Wijaya,Indonesian,Formal,Pakar AI
+G002,John Doe,English,Semi-formal,Innovative Software Engineer
+G003,Sarah Connor,English,Casual,Game-changing UX Designer
+G004,Budi Santoso,Indonesian,Semi-formal,Pengembang Aplikasi
+G005,Maria Garcia,English,Formal,Distinguished Data Scientist
+G006,Rina Dewi,Indonesian,Casual,Enthusiast Teknologi Blockchain

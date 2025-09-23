@@ -39,10 +39,10 @@ workdir.mkdir(exist_ok=True)
 # Setup code executor
 code_executor = UserProxyAgent(
     name="Code_Executor",
-    system_message="Execute code and report results.",
+    system_message="Execute Python code to save files and report results.",
     human_input_mode="NEVER",
     code_execution_config={"executor": LocalCommandLineCodeExecutor(work_dir=workdir)},
-    max_consecutive_auto_reply=1,
+    max_consecutive_auto_reply=2,
 )
 
 # User Proxy Agent
@@ -58,7 +58,7 @@ user_proxy = UserProxyAgent(
 profiler = AssistantAgent(
     name="Profiler",
     llm_config={"config_list": config_list},
-    system_message="""Write Python code to read guests.csv and extract profiles (guest_id, name, language, formality, context) to profiles.json in the working directory. Example:
+    system_message="""Write Python code to read guests.csv and save profiles (guest_id, name, language, formality, context) to event_invitations/profiles.json. Example:
 
 ```python
 import pandas as pd
@@ -86,7 +86,7 @@ End with 'FINISH'.""",
 drafter = AssistantAgent(
     name="Drafter",
     llm_config={"config_list": config_list},
-    system_message="""Read profiles.json and write a personalized markdown invitation for each guest for a tech conference on 2025-10-01 at the Global Tech Hub. Use the guest's language (English, Indonesian) and formality (Formal, Semi-formal, Casual). Save to {guest_id}.md. If API fails, use a fallback English casual invitation. Example:
+    system_message="""Write Python code to read event_invitations/profiles.json and generate a markdown invitation for each guest for a tech conference on 2025-10-01 at the Global Tech Hub. Use the guest's language (English, Indonesian) and formality (Formal, Semi-formal, Casual). Save to event_invitations/{guest_id}.md. If unable to generate, use a fallback English casual invitation. Example:
 
 ```python
 import json
@@ -95,51 +95,41 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 profiles_path = Path.cwd() / 'event_invitations/profiles.json'
-try:
-    with open(profiles_path, 'r') as f:
-        profiles = json.load(f)
-except Exception as e:
-    logger.error(f"Error reading profiles.json: {e}")
-    raise
+with open(profiles_path, 'r') as f:
+    profiles = json.load(f)
 for profile in profiles:
     guest_id = profile['guest_id']
     name = profile['name']
     language = profile['language'].lower()
     formality = profile['formality'].lower()
     context = profile['context']
-    try:
-        if language == 'english':
-            if formality == 'formal':
-                greeting = f"Dear {name},"
-                body = "We are honored to invite you to the Global Tech Conference on October 1, 2025, at the Global Tech Hub. Your expertise as a {context} will enrich our event."
-                closing = "Sincerely,\nThe Conference Team"
-            elif formality == 'semi-formal':
-                greeting = f"Dear {name},"
-                body = "We are excited to invite you to the Global Tech Conference on October 1, 2025, at the Global Tech Hub. Your participation as a {context} will be invaluable."
-                closing = "Best regards,\nThe Conference Team"
-            else:  # casual
-                greeting = f"Hi {name},"
-                body = "Join us at the Global Tech Conference on Oct 1, 2025, at the Global Tech Hub! Your {context} vibe will make it awesome."
-                closing = "Cheers,\nThe Conference Team"
-        elif language == 'indonesian':
-            if formality == 'formal':
-                greeting = f"Yth. {name},"
-                body = "Kami dengan hormat mengundang Anda ke Konferensi Teknologi Global pada 1 Oktober 2025 di Global Tech Hub. Keahlian Anda sebagai {context} akan memperkaya acara kami."
-                closing = "Hormat kami,\nTim Konferensi"
-            elif formality == 'semi-formal':
-                greeting = f"Dear {name},"
-                body = "Kami senang mengundang Anda ke Konferensi Teknologi Global pada 1 Oktober 2025 di Global Tech Hub. Partisipasi Anda sebagai {context} sangat berharga."
-                closing = "Salam hangat,\nTim Konferensi"
-            else:  # casual
-                greeting = f"Hai {name}!"
-                body = "Kami undang kamu ke Konferensi Teknologi Global tanggal 1 Okt 2025 di Global Tech Hub! Vibe kamu sebagai {context} pasti bikin seru."
-                closing = "Cheers!\nTim Konferensi"
-        else:
+    if language == 'english':
+        if formality == 'formal':
+            greeting = f"Dear {name},"
+            body = "We are honored to invite you to the Global Tech Conference on October 1, 2025, at the Global Tech Hub. Your expertise as a {context} will enrich our event."
+            closing = "Sincerely,\nThe Conference Team"
+        elif formality == 'semi-formal':
+            greeting = f"Dear {name},"
+            body = "We are excited to invite you to the Global Tech Conference on October 1, 2025, at the Global Tech Hub. Your participation as a {context} will be invaluable."
+            closing = "Best regards,\nThe Conference Team"
+        else:  # casual
             greeting = f"Hi {name},"
-            body = "Join us at the Global Tech Conference on Oct 1, 2025, at the Global Tech Hub!"
+            body = "Join us at the Global Tech Conference on Oct 1, 2025, at the Global Tech Hub! Your {context} vibe will make it awesome."
             closing = "Cheers,\nThe Conference Team"
-    except Exception as e:
-        logger.error(f"Error generating invitation for {guest_id}: {e}")
+    elif language == 'indonesian':
+        if formality == 'formal':
+            greeting = f"Yth. {name},"
+            body = "Kami dengan hormat mengundang Anda ke Konferensi Teknologi Global pada 1 Oktober 2025 di Global Tech Hub. Keahlian Anda sebagai {context} akan memperkaya acara kami."
+            closing = "Hormat kami,\nTim Konferensi"
+        elif formality == 'semi-formal':
+            greeting = f"Dear {name},"
+            body = "Kami senang mengundang Anda ke Konferensi Teknologi Global pada 1 Oktober 2025 di Global Tech Hub. Partisipasi Anda sebagai {context} sangat berharga."
+            closing = "Salam hangat,\nTim Konferensi"
+        else:  # casual
+            greeting = f"Hai {name}!"
+            body = "Kami undang kamu ke Konferensi Teknologi Global tanggal 1 Okt 2025 di Global Tech Hub! Vibe kamu sebagai {context} pasti bikin seru."
+            closing = "Cheers!\nTim Konferensi"
+    else:
         greeting = f"Hi {name},"
         body = "Join us at the Global Tech Conference on Oct 1, 2025, at the Global Tech Hub!"
         closing = "Cheers,\nThe Conference Team"
@@ -158,7 +148,7 @@ End with 'FINISH'.""",
 validator = AssistantAgent(
     name="Validator",
     llm_config={"config_list": config_list},
-    system_message="""Validate each invitation in {guest_id}.md for tone, language, and cultural appropriateness based on profiles.json. Save results to validation_{guest_id}.md. Example:
+    system_message="""Write Python code to validate each invitation in event_invitations/{guest_id}.md for tone, language, and appropriateness based on event_invitations/profiles.json. Save results to event_invitations/validation_{guest_id}.md. Example:
 
 ```python
 import json
@@ -193,6 +183,30 @@ End with 'FINISH'.""",
     max_consecutive_auto_reply=1,
 )
 
+# Fallback function to save default invitations
+def save_default_invitations():
+    logger.info("Executing fallback to save default invitations")
+    profiles_path = Path.cwd() / 'event_invitations/profiles.json'
+    try:
+        with open(profiles_path, 'r') as f:
+            profiles = json.load(f)
+    except Exception as e:
+        logger.error(f"Error reading profiles.json: {e}")
+        return
+    for profile in profiles:
+        guest_id = profile['guest_id']
+        name = profile['name']
+        greeting = f"Hi {name},"
+        body = "Join us at the Global Tech Conference on Oct 1, 2025, at the Global Tech Hub!"
+        closing = "Cheers,\nThe Conference Team"
+        invitation = f"# Invitation for {name}\n\n{greeting}\n\n{body}\n\n{closing}"
+        try:
+            with open(Path.cwd() / f'event_invitations/{guest_id}.md', 'w') as f:
+                f.write(invitation)
+            print(f"Fallback invitation for {guest_id} generated.")
+        except Exception as e:
+            logger.error(f"Error saving fallback invitation for {guest_id}: {e}")
+
 # State transition function
 def state_transition(last_speaker, groupchat):
     logger.info(f"Transitioning from {last_speaker.name}")
@@ -202,9 +216,11 @@ def state_transition(last_speaker, groupchat):
         return code_executor
     elif last_speaker is code_executor:
         last_second_speaker_name = groupchat.messages[-2]["name"]
-        if "error" in groupchat.messages[-1]["content"].lower():
-            logger.error(f"Error in {last_second_speaker_name} execution")
-            return None  # Terminate on error to save tokens
+        if "error" in groupchat.messages[-1]["content"].lower() or not groupchat.messages[-1]["content"].strip():
+            logger.error(f"Error or empty response in {last_second_speaker_name} execution")
+            if last_second_speaker_name == "Drafter":
+                save_default_invitations()  # Run fallback
+            return None  # Terminate to save tokens
         elif last_second_speaker_name == "Profiler":
             return drafter
         elif last_second_speaker_name == "Drafter":
@@ -237,5 +253,6 @@ try:
     )
 except Exception as e:
     logger.error(f"Workflow failed: {e}")
+    save_default_invitations()  # Ensure files are saved on failure
     raise
 logger.info("Workflow completed")
