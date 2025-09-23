@@ -34,6 +34,7 @@ code_executor = UserProxyAgent(
     max_consecutive_auto_reply=1,
 )
 
+# User Proxy Agent
 user_proxy = UserProxyAgent(
     name="User",
     code_execution_config=False,
@@ -230,6 +231,26 @@ for profile in profiles:
 End with 'FINISH'.""",
     max_consecutive_auto_reply=1,
 )
+
+# State transition function
+def state_transition(last_speaker, groupchat):
+    logger.info(f"Transitioning from {last_speaker.name}")
+    if last_speaker is user_proxy:
+        return profiler
+    elif last_speaker in [profiler, drafter, validator]:
+        return code_executor
+    elif last_speaker is code_executor:
+        last_second_speaker_name = groupchat.messages[-2]["name"]
+        if "error" in groupchat.messages[-1]["content"].lower():
+            logger.error(f"Error in {last_second_speaker_name} execution, retrying")
+            return groupchat.agent_by_name(last_second_speaker_name)
+        elif last_second_speaker_name == "Profiler":
+            return drafter
+        elif last_second_speaker_name == "Drafter":
+            return validator
+        elif last_second_speaker_name == "Validator":
+            return None  # End conversation
+    return None
 
 # Group chat
 group_chat = GroupChat(
