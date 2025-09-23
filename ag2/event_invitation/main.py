@@ -60,7 +60,7 @@ from pathlib import Path
 import os
 
 def find_csv_file(filename='guests.csv'):
-    """Search for CSV file in current and parent directories"""
+    "\"\"Search for CSV file in current and parent directories"\"\"
     current_dir = Path.cwd()
     print(f"Current working directory: {current_dir}")
     
