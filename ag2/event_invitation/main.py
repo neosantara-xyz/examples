@@ -1,10 +1,13 @@
 import os
 import json
 import logging
+from dotenv import load_dotenv
 from pathlib import Path
 import pandas as pd
 from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
 from autogen.coding import LocalCommandLineCodeExecutor
+
+load_dotenv()
 
 # --- Setup Logging ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -16,7 +19,7 @@ if "NAI_API_KEY" not in os.environ:
 
 config_list = [
     {
-        "model": "archipelago-70b",
+        "model": "grok-4-fast",
         "base_url": "https://api.neosantara.xyz/v1",
         "api_key": os.environ.get("NAI_API_KEY"),
         "api_type": "openai",
