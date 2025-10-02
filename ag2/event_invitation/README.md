@@ -120,12 +120,8 @@ The event is the "Your Event Name" on [Date], at [Venue].
 
 **Neosantara AI:**
 - Website: https://neosantara.xyz
-- Docs: https://docs.neosantara.xyz/en/api-reference/introduction
-
-## License
-
-MIT License - see LICENSE file for details.
+- Docs: https://docs.neosantara.xyz/en/autogen
 
 ---
 
-**Building Agents with Neosantara AI & AG2** | [Neosantara](https://neosantara.xyz) | [AG2](https://ag2.ai/) | [Build with AG2](https://github.com/ag2ai/build-with-ag2)
+**Building Agents with Neosantara AI & AG2** | [Neosantara AI](https://neosantara.xyz/) | [AG2](https://ag2.ai/) | [Build with AG2](https://github.com/ag2ai/build-with-ag2)
