@@ -19,7 +19,7 @@ if "NAI_API_KEY" not in os.environ:
 
 config_list = [
     {
-        "model": "grok-4-fast",
+        "model": "gpt-oss-20b", // see https://www.neosantara.xyz/models
         "base_url": "https://api.neosantara.xyz/v1",
         "api_key": os.environ.get("NAI_API_KEY"),
         "api_type": "openai",
