@@ -1,0 +1,8 @@
+crewai
+langchain-openai
+python-dotenv
+litellm
+fastapi
+apscheduler
+email-validator
+fastapi_sso
