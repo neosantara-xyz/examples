@@ -2,18 +2,21 @@
 
 A collection of interactive "recipes" to help you build with Neosantara AI. Each recipe can be opened directly in **Google Colab**.
 
-## 🛠️ Getting Started with Google Colab
+## 🛠️ Getting Started (Desktop & Mobile)
 
-If you are new to Google Colab, follow these steps to set up your API Key safely:
+If you are new to Google Colab, here is how to set up your API Key:
 
-1.  **Open a Notebook**: Click any of the "Open in Colab" badges below.
-2.  **Set up Secrets**:
-    *   On the left sidebar, click the **Key icon (Secrets)** 🔑.
-    *   Click **"Add new secret"**.
-    *   Name the secret `NEOSANTARA_API_KEY`.
-    *   Paste your API Key from the [Neosantara Dashboard](https://app.neosantara.xyz/api-keys) into the "Value" field.
-    *   **Enable "Notebook access"** for this secret.
-3.  **Run Cells**: Click the Play button ▶️ on each code cell.
+### Option A: Use Colab Secrets (Recommended for Desktop)
+1. On the left sidebar, click the **Key icon (Secrets)** 🔑.
+2. Add a new secret named `NEOSANTARA_API_KEY`.
+3. Paste your key from the [Neosantara Dashboard](https://app.neosantara.xyz/api-keys).
+4. Enable **"Notebook access"**.
+
+### Option B: Manual Input (Best for Mobile)
+If you are on a mobile device or cannot find the Key icon:
+1. Simply **run the first code cell**.
+2. A password prompt will appear asking for your `Neosantara API Key`.
+3. Paste your key there and press Enter.
 
 ---
 
