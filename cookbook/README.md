@@ -9,6 +9,7 @@ A collection of interactive "recipes" to help you build with Neosantara AI. Each
 | **Image Gen Basics** | Generating images with Flux.1 schnell | Beginner | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/beginner/image-gen-basics.ipynb) |
 | **Audio Transcription** | High-accuracy speech-to-text with Whisper | Beginner | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/beginner/audio-transcription.ipynb) |
 | **Streaming Chat** | Real-time response generation (SSE) | Beginner | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/beginner/streaming-chat.ipynb) |
+| **Responses API Intro** | Introduction to the new unified Responses API for all models | Beginner | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/beginner/responses-api-intro.ipynb) |
 
 ## 🧠 Advanced Recipes
 | Recipe | Description | Difficulty | Open in Colab |
@@ -17,6 +18,8 @@ A collection of interactive "recipes" to help you build with Neosantara AI. Each
 | **RAG with ChromaDB** | Complete Retrieval-Augmented Generation pipeline | Advanced | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/rag-chromadb.ipynb) |
 | **Video Generation** | Creating high-quality videos from text prompts | Advanced | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/video-generation.ipynb) |
 | **Guardrails & PII** | Indonesian-specific PII redaction & safety | Advanced | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/guardrails-pii.ipynb) |
+| **Stateful Conversations** | Building complex agents with memory and tool calls | Advanced | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/stateful-conversations.ipynb) |
+| **Migration Guide** | Step-by-step guide to migrate from OpenAI SDK to Neosantara | Advanced | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/openai-to-responses-migration.ipynb) |
 
 ---
 [Official Documentation](https://docs.neosantara.xyz)
