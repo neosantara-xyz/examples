@@ -17,6 +17,7 @@ Integration examples with the **AG2** framework for multi-agent orchestration.
 ### 3. [Agno](./agno/)
 Examples of using the Agno framework to build robust AI applications.
 - **Agent Debate**: Simulation of debates between AI agents.
+- **Telegram Bot (E2B)**: Interactive Telegram bot packaged as an E2B sandbox template.
 
 ### 4. [CrewAI](./crewai/)
 Multi-agent orchestration examples using **CrewAI**.

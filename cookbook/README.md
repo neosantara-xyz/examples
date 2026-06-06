@@ -38,6 +38,7 @@ If you are on a mobile device or cannot find the Key icon:
 | **Guardrails & PII** | Safety & data protection | `nusantara-base` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/guardrails-pii.ipynb) |
 | **Stateful Conversations** | Automatic history management | `gemini-3-flash` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/stateful-conversations.ipynb) |
 | **Migration Guide** | Switching from OpenAI SDK | `claude-4.5-sonnet` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/openai-to-responses-migration.ipynb) |
+| **Agno Telegram Bot (E2B)** | Interactive Telegram bot in an E2B sandbox | `grok-4.1-fast-non-reasoning` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/agno-telegram-e2b.ipynb) |
 
 ---
 [Official Documentation](https://docs.neosantara.xyz)

@@ -1,0 +1,6 @@
+agno[telegram]
+openai
+fastapi[standard]
+sqlalchemy
+ddgs
+e2b
