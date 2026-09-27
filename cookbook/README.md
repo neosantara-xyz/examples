@@ -39,6 +39,8 @@ If you are on a mobile device or cannot find the Key icon:
 | **Stateful Conversations** | Automatic history management | `gemini-3-flash` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/stateful-conversations.ipynb) |
 | **Migration Guide** | Switching from OpenAI SDK | `claude-4.5-sonnet` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/openai-to-responses-migration.ipynb) |
 | **Agno Telegram Bot (E2B)** | Interactive Telegram bot in an E2B sandbox | `grok-4.1-fast-non-reasoning` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/agno-telegram-e2b.ipynb) |
+| **Jev Decision Models** | Typed decisions (noul, score, choice) via `/v1/systemone` | `jev` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/jev-decision-models.ipynb) |
+| **DSPy Decision Types** | Jev-style triage agent with `Noul`, `Score`, `Choice` and `ReAnchor` | `gemini-3.8-flash`, `muse-spark-1.3-contributor`, `jev` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/neosantara-xyz/examples/blob/main/cookbook/advanced/dspy-decision-types.ipynb) |
 
 ---
 [Official Documentation](https://docs.neosantara.xyz)
